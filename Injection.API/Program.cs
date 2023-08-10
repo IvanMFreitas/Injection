@@ -1,6 +1,13 @@
+using Injection.Data.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Services
+
+//Repositories
+
+//DbContext
+builder.Services.AddDbContext<IMainDbContext, MainDbContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
