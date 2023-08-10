@@ -1,10 +1,15 @@
 using Injection.Data.Persistence;
+using Injection.Data.Repositories;
+using Injection.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Services
 
 //Repositories
+builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
+builder.Services.AddScoped<IRepository<Order>, Repository<Order>>();
+builder.Services.AddScoped<IRepository<Person>, Repository<Person>>();
 
 //DbContext
 builder.Services.AddDbContext<IMainDbContext, MainDbContext>();
