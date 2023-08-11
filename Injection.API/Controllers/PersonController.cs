@@ -34,5 +34,21 @@ namespace Injection.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+
+        [HttpGet("generateToken/{email}")]
+        public async Task<IActionResult> Login(string email){
+            try
+            {
+                var token = await _personService.GenerateJwtToken(email);
+
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions, log errors, and return a 500 status code
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+
+        }
     }
 }
