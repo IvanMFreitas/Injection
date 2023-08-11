@@ -34,5 +34,26 @@ namespace Injection.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+
+        [HttpPost("createOrder")]
+        public async Task<IActionResult> CreateOrder(OrderRequest request)
+        {
+            try
+            {
+                var (success, message) = await _orderService.CreateOrder(request, "690D5EEE-EF40-40A2-9BE4-CD8610C2692C");
+
+                if (!success){
+                    return BadRequest(new { Message = message });
+                }else{
+                    return Ok(new { Message = message });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions, log errors, and return a 500 status code
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+
+        }
     }
 }
