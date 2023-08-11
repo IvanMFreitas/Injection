@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Injection.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Injection.API.Controllers
 {
@@ -36,11 +38,19 @@ namespace Injection.API.Controllers
         }
 
         [HttpPost("createOrder")]
+        [Authorize]
         public async Task<IActionResult> CreateOrder(OrderRequest request)
         {
             try
             {
-                var (success, message) = await _orderService.CreateOrder(request, "690D5EEE-EF40-40A2-9BE4-CD8610C2692C");
+                var userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value;
+                var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+
+                if (userRole != "admin" || userId == null){
+                    return Unauthorized("This user is not authorized to create an order");
+                }
+                
+                var (success, message) = await _orderService.CreateOrder(request, userId);
 
                 if (!success){
                     return BadRequest(new { Message = message });
