@@ -110,7 +110,7 @@ sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=ab123CD*" -p 1433:1433 
 After your database is online and kicking :grin:, you can populate it, either with the SQL Script in the folder Scripts (inside the project *Injection.Data*) or using migrations, with the command:
 
 ```
-dotnet ef database update ~/YOUR_PATH/Injection/Injection.Data
+dotnet ef database update -p ~/YOUR_PATH/Injection/Injection.Data
 ```
 
 ***Important note***: This command should run on the folder 
